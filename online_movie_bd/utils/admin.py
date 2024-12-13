@@ -1,8 +1,11 @@
 import streamlit as st
 import subprocess
 import os
+from dotenv import load_dotenv
 from utils.helpers import check_folder, add_new_film, view_logs
 from utils.helpers import get_movies_by_title, delete_one_movie
+
+load_dotenv()
 
 def admin_page():
     st.title("**Панель администратора**")
@@ -35,15 +38,15 @@ def backup_database(output_file):
         result = subprocess.run(
             [
                 "pg_dump",
-                "-U", "cat", 
-                "-h", "localhost", 
-                "-d", "postgres",
-                "-F", "c",  
+                "-U", os.getenv("DB_USER"),
+                "-h", os.getenv("DB_HOST"),  
+                "-d", os.getenv("DB_NAME"), 
+                "-F", "c", 
                 "-b",  
                 "-v",  
                 "-f", output_file  
             ],
-            env={"PGPASSWORD": "mysecretpassword"}, 
+            env={"PGPASSWORD": os.getenv("DB_PASSWORD")}, 
             check=True,
             text=True,
             capture_output=True
@@ -109,14 +112,14 @@ def restore_database(input_file):
         result = subprocess.run(
             [
                 "pg_restore",
-                "-U", "cat", 
-                "-h", "localhost", 
-                "-d", "postgres", 
+                "-U", os.getenv("DB_USER"), 
+                "-h", os.getenv("DB_HOST"), 
+                "-d", os.getenv("DB_NAME"), 
                 "-c",  
                 "-v", 
                 input_file  
             ],
-            env={"PGPASSWORD": "mysecretpassword"},
+            env={"PGPASSWORD": os.getenv("DB_PASSWORD")},  
             check=True,
             text=True,
             capture_output=True
