@@ -111,13 +111,13 @@ def delete_one_movie(movie_id):
     conn = connect_to_db()
     cursor = conn.cursor()
     try:
-        cursor.execute("DELETE FROM reviews WHERE movie_id = %s", (movie_id,))
+        # cursor.execute("DELETE FROM reviews WHERE movie_id = %s", (movie_id,))
         
-        cursor.execute("DELETE FROM movie_genres WHERE movie_id = %s", (movie_id,))
+        # cursor.execute("DELETE FROM movie_genres WHERE movie_id = %s", (movie_id,))
         
-        cursor.execute("DELETE FROM ages_of_films WHERE movie_id = %s", (movie_id,))
+        # cursor.execute("DELETE FROM ages_of_films WHERE movie_id = %s", (movie_id,))
 
-        cursor.execute("DELETE FROM filmography_of_actors WHERE movie_id = %s", (movie_id,))
+        # cursor.execute("DELETE FROM filmography_of_actors WHERE movie_id = %s", (movie_id,))
 
         cursor.execute("DELETE FROM movies WHERE movie_id = %s", (movie_id,))
         conn.commit()
